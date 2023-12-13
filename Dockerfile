@@ -21,13 +21,11 @@ RUN set -ex \
     && pecl install oauth \
     && pecl install ssh2 \
     && pecl install yaml \
-    && pecl install grpc \
     && docker-php-ext-install -j$(nproc) sockets \
     && pecl install event \
     && pecl install igbinary \
     && pecl install mailparse \
     && pecl install raphf \
-    && pecl install swoole \
     && pecl install timezonedb \
     && pecl install uploadprogress \
     && pecl install uuid
@@ -41,8 +39,6 @@ RUN docker-php-ext-install bcmath \
     && docker-php-ext-enable oauth \
     && docker-php-ext-enable ssh2 \
     && docker-php-ext-enable yaml \
-    && docker-php-ext-enable grpc \
-    && docker-php-ext-enable event \
     && docker-php-ext-enable igbinary \
     && docker-php-ext-enable mailparse \
     && docker-php-ext-enable raphf \
@@ -54,8 +50,6 @@ RUN docker-php-ext-install bcmath \
     && docker-php-ext-install -j$(nproc) bz2 \
     && docker-php-ext-install -j$(nproc) calendar \
     && docker-php-ext-install -j$(nproc) ctype \
-    && docker-php-ext-install -j$(nproc) curl \
-    && docker-php-ext-install -j$(nproc) dba \
     && docker-php-ext-install -j$(nproc) dom \
     && docker-php-ext-install -j$(nproc) enchant \
     && docker-php-ext-install -j$(nproc) exif \
@@ -176,6 +170,7 @@ COPY welcome.* /usr/share/unit/welcome/
 COPY supervisor.ini /etc/supervisor/conf.d/supervisord.conf
 
 RUN chown -R unit:unit /usr/local/bin/docker-entrypoint.sh && chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN apt-get autoremove -y; apt-get -y install libevent-dev libmagickwand-dev libxslt-dev libzip-dev
 
 STOPSIGNAL SIGTERM
 
